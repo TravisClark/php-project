@@ -15,7 +15,7 @@ include("connec.php");
     
     if(mysqli_query($conn, $sql)){
 
-        echo "Thêm sản phẩm laptop thành công!.";
+        echo "Thêm sản phẩm thành công!.";
 
     } else{
 
