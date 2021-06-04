@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<form action="#" method="POST" role="form">
+			<legend>Validate dữ liệu đầu vào</legend>
+			<div class="form-group">
+				<input type="text" class="form-control" id="username" placeholder="tài khoản">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" id="password" placeholder="mật khẩu">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" id="re-password" placeholder="Nhập lại mật khẩu">
+			</div>
+			<div class="form-group">
+				<input type="date" class="form-control" id="date">
+			</div>
+			<button type="submit" class="btn btn-primary">Đăng ký</button>
+		</form>
+	</div>
+</body>
+<script>
+$(document).ready(function(){
+
+			$('.btn').click(function(){
+
+				// Lấy ra các value nhập vào
+				var username = $('#username').val(),
+					password = $('#password').val(),
+					repassword = $('#re-password').val(),
+					date = $('#date').val();
+
+				// Check nếu username rỗng
+				if(username.trim() == ''){
+					alert('Please enter User Name');
+					$('#username').focus();
+					return false;
+
+				// Check nếu password rỗng
+				} else if(password.trim() == '') {
+					alert('Please enter Password!');
+					$('#password').focus();
+					return false;
+
+                    
+				// Check nếu repassword rỗng
+				} else if(repassword.trim() == '') {
+					alert('Please enter Re-Password!');
+					$('#repassword').focus();
+					return false;
+
+				// Check nhập lại password không trùng
+				} else if(password.trim() != repassword.trim()) {
+					alert('Mật khẩu không trùng khớp');
+					$('#password').focus();
+                    $('#repassword').focus();
+					return false;
+
+				// Check nếu date of birth rỗng
+				} else if(date.trim() == '') {
+					alert('Please enter Date Of Birth');
+					$('#date').focus();
+					return false;
+
+
+				// Nếu tất cả đều hợp lệ	
+				} else {
+					alert('Ok ! Các dữ liệu hợp lệ');
+					return false;
+				}
+
+			})
+
+		})
+</script>
+</html>

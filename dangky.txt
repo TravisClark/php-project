@@ -1,0 +1,28 @@
+<?php
+include("connec.php");
+   $TK = mysqli_real_escape_string($conn, $_REQUEST['txtTK']);
+   $pass = mysqli_real_escape_string($conn, $_REQUEST['txtPass']);
+   $confirm_pass = mysqli_real_escape_string($conn, $_REQUEST['txtConfirmPass']);
+
+
+    if ($TK === $confirm_pass){
+        $sql = "INSERT INTO `taikhoan`(`TK`, `MK`) 
+                VALUES ('$TK','$pass')";
+        
+        if(mysqli_query($conn, $sql)){
+
+            echo "Thêm sản phẩm laptop thành công!.";
+
+        } else{
+
+            echo "Không thể chạy câu lệnh $sql. " . mysqli_error($conn);
+
+        }
+        mysqli_close($conn);
+    }
+    else{
+        echo "pass va confirm pass khong giong nhau";
+    };
+?>
+
+
