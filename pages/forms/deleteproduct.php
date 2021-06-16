@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<html>
+<head>
+<title>Editing MySQL Data</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+
+
+
+<!DOCTYPE html>
 <html lang="en" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 
 <head>
@@ -28,7 +37,29 @@
 </mso:CustomDocumentProperties>
 </xml><![endif]-->
 </head>
+<?php
+  include("connec.php");
+  
+  $id = @$_GET["id"];
+  $command = "SELECT * FROM `sanpham` WHERE `MaSP` = '$id' ";
+  $result = mysqli_query($conn,$command);
+  $row = mysqli_fetch_array($result);
 
+  if (isset($_POST["Cancel"])){
+    header("Location: http://localhost:1234/php-project/pages/tables/SanPham.php");
+  }else{
+    if (isset($_POST['Delete']))
+    {     
+      $command1 = "DELETE FROM `sanpham` WHERE `MaSP` = '$id'";
+      if ($conn->query($command1) === TRUE) {
+          echo "Xóa thành công!";
+          header("Location: http://localhost:1234/php-project/pages/tables/SanPham.php");
+      } else {
+          echo "Xóa thất bại: " . $conn->error;
+      }
+    }
+  }
+?>
 <body>
   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
@@ -99,119 +130,30 @@
                 <div class="dot-indicator bg-danger"></div>
               </div>
             </a>
-          <!-- </li>
-          <li class="nav-item nav-category">
-            <span class="nav-link">Dashboard</span>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="../../index.html">
-              <span class="menu-title">Dashboard</span>
-              <i class="icon-screen-desktop menu-icon"></i>
-            </a>
-          </li>
-          <li class="nav-item nav-category"><span class="nav-link">UI Elements</span></li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <span class="menu-title">Basic UI Elements</span>
-              <i class="icon-layers menu-icon"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/typography.html">Typography</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../../pages/icons/simple-line-icons.html">
-              <span class="menu-title">Icons</span>
-              <i class="icon-globe menu-icon"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../../pages/forms/basic_elements.html">
-              <span class="menu-title">Form Elements</span>
-              <i class="icon-book-open menu-icon"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../../pages/charts/chartist.html">
-              <span class="menu-title">Charts</span>
-              <i class="icon-chart menu-icon"></i>
-            </a>
-          </li> -->
-          <li class="nav-item">
-            <a class="nav-link" href="../../pages/tables/SanPham.php">
+            <a class="nav-link" href="../../pages/tables/basic-table.html">
               <span class="menu-title">Sản phẩm</span>
               <i class="icon-grid menu-icon"></i>
             </a>
-          <!-- </li>
-          <li class="nav-item nav-category"><span class="nav-link">Sample Pages</span></li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <span class="menu-title">General Pages</span>
-              <i class="icon-doc menu-icon"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login.html"> Login </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register.html"> Register </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/error-404.html"> 404 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/error-500.html"> 500 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/blank-page.html"> Blank Page </a>
-                </li>
-              </ul>
-            </div>
           </li>
-          <li class="nav-item pro-upgrade">
-            <span class="nav-link">
-              <a class="btn btn-block px-0 btn-rounded btn-upgrade"
-                href="https://www.bootstrapdash.com/product/stellar-admin-template/" target="_blank"> <i
-                  class="icon-badge mx-2"></i> Upgrade to Pro</a>
-            </span>
-          </li> -->
+
         </ul>
       </nav>
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="page-header">
-            <h3 class="page-title"> Tạo sản phẩm mới </h3>
+            <h3 class="page-title"> Chỉnh sửa sản phẩm </h3>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../tables/basic-table.html">Danh sách sản phẩm</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Tạo sản phẩm mới</li>
+                <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa sản phẩm</li>
               </ol>
             </nav>
-          </div>
+          </div>        
           <div class="row">
-            <?php            
-              include("connec.php");
-              if(isset($_POST['Create'])){
-                $MaSP = mysqli_real_escape_string($conn, $_REQUEST['txtMaSP']);
-                $TenSP = mysqli_real_escape_string($conn, $_REQUEST['txtTenSP']);
-                $MaNhom = mysqli_real_escape_string($conn, $_REQUEST['txtMaNhom']);
-                $TH = mysqli_real_escape_string($conn, $_REQUEST['txtThuongHieu']);
-                $Mota = mysqli_real_escape_string($conn, $_REQUEST['txtMoTa']);
-                $Anh = mysqli_real_escape_string($conn, $_REQUEST['txtAnh']);
-                $Gia = mysqli_real_escape_string($conn, $_REQUEST['txtGia']);
-                $SoLuong = mysqli_real_escape_string($conn, $_REQUEST['txtSoLuong']);
-                $sql = "INSERT INTO `sanpham`(`MaSP`, `TenSP`, `MaNhom`, `ThuongHieu`, `MoTa`, `AnhSP`, `Gia`, `SoLuong`) 
-                          VALUES ('$MaSP','$TenSP','$MaNhom','$TH','$Mota','$Anh',$Gia,$SoLuong)";
-                  
-                  if(mysqli_query($conn, $sql)){
-
-                      echo "Thêm sản phẩm thành công!.";
-
-                  } else{
-
-                      echo "Không thể chạy câu lệnh $sql. " . mysqli_error($conn);
-                }
-                mysqli_close($conn);
-              }             
-            ?>
-
             <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
               </div>
@@ -219,16 +161,18 @@
             <div class="col-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Tạo sản phẩm</h4>
-                  <form class="forms-sample" name="frm" method="post">
-                    <div class="form-group">
+                  <h4 class="card-title">Xóa thông tin sản phẩm</h4>
+                  <p class="card-description"> Thông tin sản phẩm </p>
+                  <form class="forms-sample" method="post">
+                    <div class="form-group">  
                       <label for="exampleInputMSP">Mã sản phẩm</label>
-                      <input type="text" class="form-control" id="exampleInputName1" placeholder="Mã sản phẩm" name="txtMaSP">
-                    </div>
+                      <input type="text" class="form-control" id="exampleInputName1" value="<?php echo $row[0]; ?>"  name="txtMaSP" placeholder="Mã sản phẩm" disabled>
+                    </div>                   
                     <div class="form-group">
                       <label for="exampleInputTSP">Tên sản phẩm</label>
-                      <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Tên sản phẩm" name="txtTenSP">
+                      <input type="text" class="form-control" id="exampleInputEmail3" value="<?php echo $row[1]; ?>"  name="txtTenSP" placeholder="Tên sản phẩm" required>
                     </div>
+
                     <div class="form-group">
                       <label for="exampleSelectMN">Mã nhóm</label>
                       <select class="form-control" id="exampleSelectMN" name="txtMaNhom">
@@ -236,33 +180,33 @@
                         <option>GPU</option>
                       </select>
                     </div>
+
                     <div class="form-group">
                       <label for="exampleSelectTH">Thương hiệu</label>
-                      <input type="text" class="form-control" id="exampleInputEmail3" name="txtThuongHieu">
+                      <input type="text" class="form-control" id="exampleInputEmail3" value="<?php echo $row[3]; ?>"name="txtThuongHieu" required>
                     </div>
 
                     <div class="form-group">
-                      <label for="exampleInputMT">Mô tả</label>
-                      <input type="text" class="form-control" id="exampleInputMT" placeholder="Mô tả" name="txtMoTa">
+                      <la bel for="exampleInputMT">Mô tả</la>
+                      <input type="text" class="form-control" id="exampleInputEmail3" value="<?php echo $row[4]; ?>"  name="txtMoTa" placeholder="Mô tả" required>
                     </div>
-
+                    
                     <div class="form-group">
                       <label>File upload</label>
                       <div class="exampleInputMT">Ảnh minh họa:</div>
-                      <input type="text" class="form-control" id="exampleInputMT" placeholder="Tên File Ảnh" name="txtAnh">
+                      <input type="text" class="form-control" id="exampleInputMT" value="<?php echo $row[5]; ?>" placeholder="Tên File Ảnh" name="txtAnh" required>
                     </div>
-                          
+                    
                     <div class="form-group">
                       <label for="exampleInputGia">Giá</label>
-                      <input type="text" class="form-control" id="exampleGia" placeholder="Money money money" name="txtGia">
+                      <input class="form-control" id="exampleGia" type="text" value="<?php echo $row[6]; ?>" name="txtGia" placeholder="Money money money" required>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputGia">Số lượng</label>
-                      <input type="text" class="form-control" id="exampleSL" placeholder="Số lượng" name="txtSoLuong">
+                      <input type="text" value="<?php echo $row[7]; ?>" name="txtSoLuong" type="text" class="form-control" id="exampleSL" placeholder="Số lượng" required>
                     </div>
-                    <button type="submit" class="btn btn-primary mr-2" name="Create" >Tạo</button>
-                    <button class="btn btn-light" >Cancel</button>
-                  </form>
+                    <button type="submit" class="btn btn-primary mr-2" name="Delete" >Delete</button>
+                    <button type="submit" class="btn btn-light" href="../tables/SanPham.php" name="Cancel">Cancel</button>                                   
                 </div>
               </div>
             </div>

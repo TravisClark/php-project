@@ -192,7 +192,7 @@
                           <td>$row[1]</td>
                           <td>$row[7]</td>
                           <td>$row[6]</td>
-                          <td><a href="."../forms/editproduct.php?id=$row[0]".">Edit</a>&nbsp;|&nbsp;<a href=>Delete</a></td>
+                          <td><a href="."../forms/editproduct.php?id=$row[0]".">Edit</a>&nbsp;|&nbsp;<a href="."../forms/deleteproduct.php?id=$row[0]".">Delete</a></td>
                           </tr>";
                           }
                           echo '</table>';
