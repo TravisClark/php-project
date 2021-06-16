@@ -50,9 +50,14 @@
               </div>
             </li>
             <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
-              <a class="nav-link" id="UserDropdown" href="../samples/login.php">
-                Login</a>
-              
+              <?php         
+              session_start();
+              if(isset($_SESSION['user'])){
+                  echo '<a class="nav-link" id="UserDropdown" href="../samples/logout.php">Logout</a>';                                   
+              }else{
+                  echo '<a class="nav-link" id="UserDropdown" href="../samples/login.php">Login</a>'; 
+              }
+              ?>                         
             </li>
           </ul>
           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -122,7 +127,7 @@
               </a>
             </li> -->
             <li class="nav-item">
-              <a class="nav-link" href="../../pages/tables/basic-table.php">
+              <a class="nav-link" href="../../pages/tables/SanPham.php">
                 <span class="menu-title">Sản phẩm</span>
                 <i class="icon-grid menu-icon"></i>
               </a>
@@ -156,7 +161,7 @@
             <div class="page-header">
               <h3 class="page-title"> Danh sách sản phẩm </h3>
               <nav aria-label="breadcrumb">
-                <button type="button" class="btn btn-dark btn-fw"><a href="../forms/createproduct.html" style="text-decoration: none; color: #fff;">Tạo sản phẩm</a></button>               
+                <button type="button" class="btn btn-dark btn-fw"><a href="../forms/createproduct.php" style="text-decoration: none; color: #fff;">Tạo sản phẩm</a></button>               
               </nav>
             </div>
             <div class="row">
@@ -187,7 +192,7 @@
                           <td>$row[1]</td>
                           <td>$row[7]</td>
                           <td>$row[6]</td>
-                          <td><a href=>Edit</a>&nbsp;|&nbsp;<a href=>Delete</a></td>
+                          <td><a href="."../forms/editproduct.php?id=$row[0]".">Edit</a>&nbsp;|&nbsp;<a href="."../forms/deleteproduct.php?id=$row[0]".">Delete</a></td>
                           </tr>";
                           }
                           echo '</table>';

@@ -29,9 +29,11 @@
             $kq = mysqli_query($conn,$select);
             $num = mysqli_num_rows($kq);
             if($num == 1){
-                header("location: http://localhost:1234/nhom%204/pages/tables/basic-table.php");
+                $user = mysqli_fetch_array($kq);
+                $_SESSION['user']['user_HoTen'] = $user['HoTen'];
+                header("location: http://localhost:1234/php-project/pages/tables/SanPham.php");
             }else{
-                $error='wrong passwork';
+                $error='Tài khoản hoặc mật khẩu không chính xác';
             }
         }
     ?>
@@ -49,10 +51,10 @@
                 <h6 class="font-weight-light">Sign in to continue.</h6>
                 <form class="pt-3" method="post">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="" placeholder="Username" name="email">
+                    <input type="email" class="form-control form-control-lg" id="" placeholder="Username" name="email" required>
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-lg" id="" placeholder="Password" name="password">
+                    <input type="password" class="form-control form-control-lg" id="" placeholder="Password" name="password" required>
                   </div>
                   <span style="color:red"><?php if(isset($error)) echo $error?></span><br/>
                   <div class="mt-3">

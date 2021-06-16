@@ -37,9 +37,38 @@
 </mso:CustomDocumentProperties>
 </xml><![endif]-->
 </head>
+<?php
+  include("connec.php");
+  $id = @$_GET["id"];
+  $MaSP = @$_POST["txtMaSP"];
+  $TenSP = @$_POST["txtTenSP"];
+  $MaNhom = @$_POST["txtMaNhom"];
+  $TH = @$_POST["txtThuongHieu"];
+  $Mota = @$_POST["txtMoTa"];
+  $Anh = @$_POST["txtAnh"];
+  $Gia = @$_POST["txtGia"];
+  $SoLuong = @$_POST["txtSoLuong"];
 
+  $command = "SELECT * FROM `sanpham` WHERE `MaSP` = '$id' ";
+  $result = mysqli_query($conn,$command);
+  $row = mysqli_fetch_array($result);
+
+  if (isset($_POST["Cancel"])){
+    header("Location: http://localhost:1234/php-project/pages/tables/SanPham.php");
+  }else{
+    if (isset($_POST['Update']))
+    {     
+      $command1 = "UPDATE `sanpham` SET `TenSP`='$TenSP',`MaNhom`='$MaNhom',`ThuongHieu`='$TH',`MoTa`='$Mota',`AnhSP`='$Anh',`Gia`='$Gia',`SoLuong`= '$SoLuong',`NgayNhap`= CURRENT_TIME WHERE `MaSP` = '$id'";
+      if ($conn->query($command1) === TRUE) {
+          echo "Sửa thành công!";
+          header("Location: http://localhost:1234/php-project/pages/tables/SanPham.php");
+      } else {
+          echo "Sửa thất bại: " . $conn->error;
+      }
+    }
+  }
+?>
 <body>
-  
   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -69,27 +98,18 @@
               <a class="dropdown-item">
                 <i class="flag-icon flag-icon-us"></i> English </a>
               <a class="dropdown-item">
-                <i class="flag-icon flag-icon-fr"></i> French </a>
-              <a class="dropdown-item">
-                <i class="flag-icon flag-icon-ae"></i> Arabic </a>
-              <a class="dropdown-item">
-                <i class="flag-icon flag-icon-ru"></i> Russian </a>
+                <i class="flag-icon flag-icon-vn"></i> Vietnamese </a>
             </div>
           </li>
           <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
-            <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-              <img class="img-xs rounded-circle ml-2" src="../../images/faces/face8.jpg" alt="Profile image"> <span
-                class="font-weight-normal"> Henry Klein </span></a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-              <div class="dropdown-header text-center">
-                <img class="img-md rounded-circle" src="../../images/faces/face8.jpg" alt="Profile image">
-                <p class="mb-1 mt-3">Allen Moreno</p>
-                <p class="font-weight-light text-muted mb-0">allenmoreno@gmail.com</p>
-              </div>
-              <a class="dropdown-item"><i class="dropdown-item-icon icon-user text-primary"></i> My Profile <span
-                  class="badge badge-pill badge-danger">1</span></a>
-              <a class="dropdown-item" href="../samples/login.html"><i class="dropdown-item-icon icon-power text-primary"></i>Log out</a>
-            </div>
+            <?php         
+            session_start();
+            if(isset($_SESSION['user'])){
+                echo '<a class="nav-link" id="UserDropdown" href="../samples/logout.php">Logout</a>';                                   
+            }else{
+                echo '<a class="nav-link" id="UserDropdown" href="../samples/login.php">Login</a>'; 
+            }
+            ?>                         
           </li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
@@ -121,7 +141,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="../../pages/tables/basic-table.html">
+            <a class="nav-link" href="../../pages/tables/SanPham.php">
               <span class="menu-title">Sản phẩm</span>
               <i class="icon-grid menu-icon"></i>
             </a>
@@ -136,13 +156,12 @@
             <h3 class="page-title"> Chỉnh sửa sản phẩm </h3>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="../tables/basic-table.html">Danh sách sản phẩm</a></li>
+                <li class="breadcrumb-item"><a href="../tables/SanPham.php">Danh sách sản phẩm</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa sản phẩm</li>
               </ol>
             </nav>
-          </div>
+          </div>        
           <div class="row">
-
             <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
               </div>
@@ -152,71 +171,50 @@
                 <div class="card-body">
                   <h4 class="card-title">Sửa thông tin sản phẩm</h4>
                   <p class="card-description"> Thông tin sản phẩm </p>
-                  <form class="forms-sample">
-                    <div class="form-group">
+                  <form class="forms-sample" method="post">
+                    <div class="form-group">  
                       <label for="exampleInputMSP">Mã sản phẩm</label>
-                      <input type="text"  class="form-control" id="exampleInputName1" value="<?php echo $row['TenSP']; ?>"  name="ma" placeholder="Mã sản phẩm">
-                    </div>
+                      <input type="text" class="form-control" id="exampleInputName1" value="<?php echo $row[0]; ?>"  name="txtMaSP" placeholder="Mã sản phẩm" disabled>
+                    </div>                   
                     <div class="form-group">
                       <label for="exampleInputTSP">Tên sản phẩm</label>
-                      <input type="text" class="form-control" id="exampleInputEmail3" value="<?php echo $row['TenSP']; ?>"  name="ten" placeholder="Tên sản phẩm">
+                      <input type="text" class="form-control" id="exampleInputEmail3" value="<?php echo $row[1]; ?>"  name="txtTenSP" placeholder="Tên sản phẩm" required>
                     </div>
+
                     <div class="form-group">
                       <label for="exampleSelectMN">Mã nhóm</label>
-                      <input type="text" class="form-control" id="exampleInputEmail3" value="<?php echo $row['MaNhom']; ?>" name="maNhom">
+                      <select class="form-control" id="exampleSelectMN" name="txtMaNhom">
+                        <option>CPU</option>
+                        <option>GPU</option>
+                      </select>
                     </div>
+
                     <div class="form-group">
                       <label for="exampleSelectTH">Thương hiệu</label>
-                      <input type="text" class="form-control" id="exampleInputEmail3" value="<?php echo $row['ThuongHieu']; ?>"name="thuongHieu">
+                      <input type="text" class="form-control" id="exampleInputEmail3" value="<?php echo $row[3]; ?>"name="txtThuongHieu" required>
                     </div>
+
                     <div class="form-group">
                       <la bel for="exampleInputMT">Mô tả</la>
-                      <input type="text" class="form-control" id="exampleInputEmail3" value="<?php echo $row['MoTa']; ?>"  name="moTa" placeholder="Mô tả">
+                      <input type="text" class="form-control" id="exampleInputEmail3" value="<?php echo $row[4]; ?>"  name="txtMoTa" placeholder="Mô tả" required>
                     </div>
+                    
                     <div class="form-group">
                       <label>File upload</label>
-                      <div class="input-group col-xs-12">
-                        <div class="custom-file">
-                        <input type="file" value="<?php echo $row['AnhSP']; ?>" name="anh"  class="custom-file-input" id="validatedCustomFile" required>
-                          <label class="custom-file-label" for="validatedCustomFile">Chọn ảnh mô tả sản phẩm</label>
-                          <div class="invalid-feedback">Example invalid custom file feedback</div>
-                        </div>
-                      </div>
+                      <div class="exampleInputMT">Ảnh minh họa:</div>
+                      <input type="text" class="form-control" id="exampleInputMT" value="<?php echo $row[5]; ?>" placeholder="Tên File Ảnh" name="txtAnh" required>
                     </div>
+                    
                     <div class="form-group">
                       <label for="exampleInputGia">Giá</label>
-                      <input class="form-control" id="exampleGia" type="text" value="<?php echo $row['gia']; ?>" name="anh" placeholder="Money money money">
+                      <input class="form-control" id="exampleGia" type="text" value="<?php echo $row[6]; ?>" name="txtGia" placeholder="Money money money" required>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputGia">Số lượng</label>
-                      <input type="text" value="<?php echo $row['SoLuong']; ?>" name="sl" type="text" class="form-control" id="exampleSL" placeholder="Số lượng">
+                      <input type="text" value="<?php echo $row[7]; ?>" name="txtSoLuong" type="text" class="form-control" id="exampleSL" placeholder="Số lượng" required>
                     </div>
-                    <input type="submit" value="Update" name="update_user" >
-
-                    <button class="btn btn-light">Cancel</button>
-
-                    
-                    <?php
-                        if (isset($_POST['update_user'])){
-                            $ma=@$_POST['ma'];
-                            $ten=@$_POST['ten'];
-                            $maNhom=@$_POST['maNhom'];
-                            $thuongHieu=@$_POST['thuongHieu'];
-                            $moTa=@$_POST['moTa'];
-                            $anh=@$_POST['anh'];
-                            $gia=@$_POST['gia'];
-                            $sl=@$_POST['sl'];
-                            
-                            $sql = "UPDATE `sanpham` SET MaSP='$ma', TenSP='$ten', MaNhom = '$maNhom', ThuongHieu = '$thuongHieu', MoTa = '$moTa', AnhSP='$anh'  ,Gia='$gia', SoLuong='$sl', WHERE MaSP='$ma'";
-                            if ($conn->query($sql) === TRUE) {
-                            echo "Record updated successfully";
-                            } else {
-                            echo "Error updating record: " . $conn->error;
-                            }
-                            $conn->close();
-                        }
-                    ?>
-                  </form>
+                    <button type="submit" class="btn btn-primary mr-2" name="Update" >Update</button>
+                    <button type="submit" class="btn btn-light" href="../tables/SanPham.php" name="Cancel">Cancel</button>                                   
                 </div>
               </div>
             </div>

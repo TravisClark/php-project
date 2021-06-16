@@ -19,6 +19,29 @@
     <link rel="shortcut icon" href="../../images/favicon.png" />
   </head>
   <body>
+
+    <?php
+      session_start();
+      include("connec.php");
+      if(isset($_POST['DangKy'])){
+        $HoTen = mysqli_real_escape_string($conn, $_REQUEST['txtHoTen']);
+        $Email = mysqli_real_escape_string($conn, $_REQUEST['txtEmail']);
+        $Password = mysqli_real_escape_string($conn, $_REQUEST['txtPass']);
+        $ConfirmPassword = mysqli_real_escape_string($conn, $_REQUEST['txtConfirmPass']);
+
+        $sql = "INSERT INTO `taikhoan`(`TK`, `MK`, `HoTen`) VALUES ('$Email','$Password','$HoTen')";
+          
+          if($Password == $ConfirmPassword){
+            mysqli_query($conn, $sql); 
+            header("location: http://localhost:1234/php-project/pages/tables/SanPham.php"); 
+          } 
+          else{
+              $error='Mật khẩu không khớp!';
+          }
+          mysqli_close($conn);
+      }
+    ?>
+    
     <div class="container-scroller">
       <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="content-wrapper d-flex align-items-center auth">
@@ -30,20 +53,24 @@
                 </div>
                 <h4>Lần đầu truy cập?</h4>
                 <h6 class="font-weight-light">Đăng ký đơn giản chỉ với vài bước!</h6>
-                <form class="pt-3">
+                <form class="pt-3" method="post">
+                  <span style="color:red"><?php if(isset($error)) echo $error?></span><br/>
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="Tài khoản">
+                    <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="Họ và Tên" name="txtHoTen" required>
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="Mật khẩu">
+                    <input type="email" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="Email" name="txtEmail" required>
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="Xác nhận mật khẩu">
+                    <input type="password" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="Password" name="txtPass" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="password" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="ConfirmPass" name="txtConfirmPass" required>
                   </div>
                   <div class="mt-3">
-                    <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index.html">SIGN UP</a>
+                    <button type="submit" class="btn btn-primary mr-2" name="DangKy">Đăng ký</button>
                   </div>
-                  <div class="text-center mt-4 font-weight-light"> Đã có tài khoản? <a href="login.html" class="text-primary">Đăng nhập.</a>
+                  <div class="text-center mt-4 font-weight-light"> Đã có tài khoản? <a href="login.php" class="text-primary">Đăng nhập.</a>
                   </div>
                 </form>
               </div>
