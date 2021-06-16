@@ -133,7 +133,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="../../pages/tables/basic-table.html">
+            <a class="nav-link" href="../../pages/tables/SanPham.php">
               <span class="menu-title">Sản phẩm</span>
               <i class="icon-grid menu-icon"></i>
             </a>
@@ -148,7 +148,7 @@
             <h3 class="page-title"> Chỉnh sửa sản phẩm </h3>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="../tables/basic-table.html">Danh sách sản phẩm</a></li>
+                <li class="breadcrumb-item"><a href="../tables/SanPham.php">Danh sách sản phẩm</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa sản phẩm</li>
               </ol>
             </nav>
