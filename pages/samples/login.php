@@ -29,6 +29,8 @@
             $kq = mysqli_query($conn,$select);
             $num = mysqli_num_rows($kq);
             if($num == 1){
+                $user = mysqli_fetch_array($kq);
+                $_SESSION['user']['user_HoTen'] = $user['HoTen'];
                 header("location: http://localhost:1234/php-project/pages/tables/SanPham.php");
             }else{
                 $error='Tài khoản hoặc mật khẩu không chính xác';
