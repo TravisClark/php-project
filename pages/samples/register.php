@@ -33,7 +33,11 @@
           
           if($Password == $ConfirmPassword){
             mysqli_query($conn, $sql); 
-            header("location: http://localhost:1234/php-project/pages/tables/SanPham.php"); 
+            $select = "SELECT * FROM `taikhoan` WHERE `TK`='$email' AND `MK` = '$pass'";
+            $kq = mysqli_query($conn,$select);
+            $user = mysqli_fetch_array($kq);
+            $_SESSION['user']['user_HoTen'] = $user['HoTen'];
+            header("location: http://localhost:1234/php-project/admin.php"); 
           } 
           else{
               $error='Mật khẩu không khớp!';
