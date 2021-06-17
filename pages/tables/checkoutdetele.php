@@ -18,6 +18,31 @@
     <link rel="stylesheet" href="../../css/style.css" <!-- End layout styles -->
     <link rel="shortcut icon" href="../../images/favicon.png" />
   </head>
+  <?php
+    $conn = mysqli_connect("localhost", "root", "", "website");
+    mysqli_set_charset($conn, 'utf8');
+    $id = @$_GET["id"];
+    $lenh = "SELECT * FROM `orders` WHERE `id` = '$id' ";
+    $kq = mysqli_query($conn,$lenh);
+    $row = mysqli_fetch_row($kq);
+    if (isset($_POST["Cancel"])){
+        header("Location: http://localhost:1234/php-project/pages/tables/DonHang.php");
+    }
+    else{
+          if (isset($_POST['Delete']))
+          {     
+              $command1 = "DELETE FROM `order_details` WHERE `order_id` = '$id'";
+              $command2 = "DELETE FROM `orders` WHERE `id` = '$id'";
+              if ($conn->query($command1) && $conn->query($command2) === TRUE) {
+                  mysqli_close($conn);
+                  echo "Xóa thành công!";
+                  header("Location: http://localhost:1234/php-project/pages/tables/DonHang.php");
+              } else {
+                  echo "Xóa thất bại: " . $conn->error;
+              }
+          }
+        }
+  ?>
   <body>
     <div class="container-scroller">
       <!-- partial:../../partials/_navbar.html -->
@@ -150,44 +175,41 @@
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="page-header">
-              <h3 class="page-title"> Danh sách sản phẩm </h3>
-              <nav aria-label="breadcrumb">
-                <button type="button" class="btn btn-dark btn-fw"><a href="../forms/createproduct.php" style="text-decoration: none; color: #fff;">Tạo sản phẩm</a></button>               
-              </nav>
+              <h3 class="page-title"> Danh sách đơn hàng </h3>
+              
             </div>
             <div class="row">
               
               <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Tổng quan các sản phẩm</h4>
+                    <h4 class="card-title">Đơn hàng</h4>
                     <table class="table table-bordered" style="text-align: center;">
-                      <?php
-                        include("connec.php");
-                        $lenh = "select * from `sanpham`";
-                        $kq = mysqli_query($conn,$lenh);
-                        echo '<thead>
-                              <tr>
-                                <th> Mã sản phẩm </th>
-                                <th> Tên sản phẩm </th>
-                                <th> Số lượng </th>
-                                <th> Giá </th>
-                                <th> Thao tác </th>
-                              </tr>
-                              </thead>
-                            ';
-                          while($row = mysqli_fetch_row($kq))
-                          {
-                          echo"<tr>
-                          <td>$row[0]</td>
-                          <td>$row[1]</td>
-                          <td>$row[7]</td>
-                          <td>$row[6]</td>
-                          <td><a href="."../forms/editproduct.php?id=$row[0]".">Edit</a>&nbsp;|&nbsp;<a href="."../forms/deleteproduct.php?id=$row[0]".">Delete</a></td>
-                          </tr>";
-                          }                         
-                          mysqli_close($conn);
-                      ?>                     
+                    <form class="forms-sample" method="post">
+                    <table style="border: 1px solid black; border-spacing: 5px; width: 100%; text-align: center;">
+                        <thead>
+                            <tr>
+                            <th> ID </th>
+                            <th> Order Id </th>
+                            <th> Ma San Pham </th>
+                            <th> So Luong </th>
+                            <th> Gia </th>
+                            </tr>
+                        </thead>
+                        
+                        <tr>
+                            <td><input type="text" value="<?php echo $row[0]; ?>"  name="txtid" placeholder="ID" disabled></td>
+                            <td><input type="text" value="<?php echo $row[1]; ?>"  name="txtOrderId" placeholder="Order Id" disabled></td>
+                            <td><input type="text" value="<?php echo $row[2]; ?>"  name="txtMaSp" placeholder="Mã sản phẩm" disabled></td>
+                            <td><input type="text" value="<?php echo $row[3]; ?>"  name="txtNum" placeholder="So Luong" disabled></td>
+                            <td><input type="text" value="<?php echo $row[4]; ?>"  name="txtPrice" placeholder="Gia" disabled></td>
+                            <td>
+                                <button type="submit" class="btn btn-primary mr-2" name="Delete" >Delete</button>
+                                <button type="submit" class="btn btn-light" href="checkoutadmin" name="Cancel">Cancel</button>       
+                            </td>
+                        </tr>
+                    </table>
+                    </form>                    
                     </table>
                   </div>
                 </div>

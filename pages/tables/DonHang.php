@@ -150,44 +150,49 @@
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="page-header">
-              <h3 class="page-title"> Danh sách sản phẩm </h3>
-              <nav aria-label="breadcrumb">
-                <button type="button" class="btn btn-dark btn-fw"><a href="../forms/createproduct.php" style="text-decoration: none; color: #fff;">Tạo sản phẩm</a></button>               
-              </nav>
+              <h3 class="page-title"> Danh sách đơn hàng </h3>
+              
             </div>
             <div class="row">
               
               <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Tổng quan các sản phẩm</h4>
+                    <h4 class="card-title">Đơn hàng</h4>
                     <table class="table table-bordered" style="text-align: center;">
-                      <?php
-                        include("connec.php");
-                        $lenh = "select * from `sanpham`";
-                        $kq = mysqli_query($conn,$lenh);
-                        echo '<thead>
+                    <?php
+                      $conn = mysqli_connect("localhost", "root", "", "website");
+                      mysqli_set_charset($conn, 'utf8');
+                      $lenh = "SELECT * FROM `orders`";
+                      $kq = mysqli_query($conn,$lenh);
+                      echo '
+                              <thead>
                               <tr>
-                                <th> Mã sản phẩm </th>
-                                <th> Tên sản phẩm </th>
-                                <th> Số lượng </th>
-                                <th> Giá </th>
-                                <th> Thao tác </th>
+                              <th> ID </th>
+                              <th> fullname </th>
+                              <th> phone_number </th>
+                              <th> email </th>
+                              <th> address </th>
+                              <th>  </th>
                               </tr>
                               </thead>
-                            ';
+                          ';
                           while($row = mysqli_fetch_row($kq))
                           {
                           echo"<tr>
                           <td>$row[0]</td>
                           <td>$row[1]</td>
-                          <td>$row[7]</td>
-                          <td>$row[6]</td>
-                          <td><a href="."../forms/editproduct.php?id=$row[0]".">Edit</a>&nbsp;|&nbsp;<a href="."../forms/deleteproduct.php?id=$row[0]".">Delete</a></td>
+                          <td>$row[2]</td>
+                          <td>$row[3]</td>
+                          <td>$row[4]</td>                        
+                          <td><a href="."checkoutdetail.php?id=$row[0]".">Detail</a>
+                              &nbsp;|&nbsp;
+                              <a href="."checkoutdetele.php?id=$row[0]".">Delete</a>
+                          </td>
                           </tr>";
                           }                         
                           mysqli_close($conn);
-                      ?>                     
+                      ?>                    
                     </table>
                   </div>
                 </div>
