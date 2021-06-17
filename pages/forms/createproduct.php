@@ -84,22 +84,8 @@
       <!-- partial:../../partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-          <li class="nav-item nav-profile">
-            <a href="#" class="nav-link">
-              <div class="profile-image">
-                <img class="img-xs rounded-circle" src="../../images/faces/face8.jpg" alt="profile image">
-                <div class="dot-indicator bg-success"></div>
-              </div>
-              <div class="text-wrapper">
-                <p class="profile-name">Allen Moreno</p>
-                <p class="designation">Administrator</p>
-              </div>
-              <div class="icon-container">
-                <i class="icon-bubbles"></i>
-                <div class="dot-indicator bg-danger"></div>
-              </div>
-            </a>
-          <!-- </li>
+          
+          <!--
           <li class="nav-item nav-category">
             <span class="nav-link">Dashboard</span>
           </li>
@@ -146,7 +132,14 @@
               <span class="menu-title">Sản phẩm</span>
               <i class="icon-grid menu-icon"></i>
             </a>
-          <!-- </li>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="../../pages/tables/DonHang.php">
+                <span class="menu-title">Đơn hàng</span>
+                <i class="icon-chart menu-icon"></i>
+              </a>
+          </li>
+          <!-- 
           <li class="nav-item nav-category"><span class="nav-link">Sample Pages</span></li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">

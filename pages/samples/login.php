@@ -60,7 +60,7 @@
                   <div class="mt-3">
                     <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" name="login">Login</button>
                   </div>
-                  <div class="text-center mt-4 font-weight-light"> Chưa có tài khoản? <a href="register.html" class="text-primary">Đăng ký ngay.</a>
+                  <div class="text-center mt-4 font-weight-light"> Chưa có tài khoản? <a href="register.php" class="text-primary">Đăng ký ngay.</a>
                   </div>                
                 </form>
               </div>
