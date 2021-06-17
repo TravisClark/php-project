@@ -23,13 +23,13 @@
       <!-- partial:../../partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="navbar-brand-wrapper d-flex align-items-center">
-          <a class="navbar-brand brand-logo" href="../../index.html">
+          <a class="navbar-brand brand-logo" href="../../admin.php">
             <img src="../../images/logo.svg" alt="logo" class="logo-dark" />
           </a>
           <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="../../images/logo-mini.svg" alt="logo" /></a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center flex-grow-1">
-          <h5 class="mb-0 font-weight-medium d-none d-lg-flex">Quản lý sản phẩm</h5>
+          <h5 class="mb-0 font-weight-medium d-none d-lg-flex">Quản lý đơn hàng</h5>
           <ul class="navbar-nav navbar-nav-right ml-auto">
             <form class="search-form d-none d-md-block" action="#">
               <i class="icon-magnifier"></i>
@@ -121,6 +121,12 @@
               <a class="nav-link" href="../../pages/tables/DonHang.php">
                 <span class="menu-title">Đơn hàng</span>
                 <i class="icon-chart menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/tables/KhachHang.php">
+                <span class="menu-title">Khách hàng</span>
+                <i class="icon-globe menu-icon"></i>
               </a>
             </li>
             <!-- <li class="nav-item nav-category"><span class="nav-link">Sample Pages</span></li>
